@@ -1,6 +1,10 @@
 # DeviceChecker
 Simple yet effective Device Checker for RDM (Written in python for Discord)
 
+WHAT IT DOES:
+- Posts updates for phone status every 5 seconds without spamming messages (edits a single one)
+- Private messages the initiator of Device Failure
+
 REQUIREMENTS:
 - Discord Bot with token ready and has read & write permissions
 - 5 iPhone uuids
