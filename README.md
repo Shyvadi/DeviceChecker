@@ -20,3 +20,7 @@ STEPS TO CONFIGURE BOT:
 - 9: Save as DeviceChecker.py
 - 10: If you are on Windows, run DeviceChecker.bat, otherwise start with "python DeviceChecker.py" while in the directory
 - 11: REMEMBER TO HAVE THE BOT ON A SERVER FIRST
+
+STEPS TO START BOT:
+- 1: Once you have the py file running, simply type !start in the channel you would like the bot to post the updates
+REMEMBER IT NEEDS READ/WRITE PERMS
