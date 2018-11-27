@@ -7,7 +7,7 @@ WHAT IT DOES:
 
 REQUIREMENTS:
 - Discord Bot with token ready and has read & write permissions
-- 5 iPhone uuids
+- 5 iPhone uuids (currently hard coded for 5 devices)
 - RDM Database
 - Your Discord ID (right click on your account name after typing something, click copy ID)
 
