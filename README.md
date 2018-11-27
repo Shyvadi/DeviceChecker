@@ -6,6 +6,8 @@ WHAT IT DOES:
 - Private messages the initiator of Device Failure
 
 REQUIREMENTS:
+- Discord.py (install with "python3 -m pip install -U discord.py")
+- mysql connector (https://dev.mysql.com/downloads/connector/python/)
 - Discord Bot with token ready and has read & write permissions
 - 5 iPhone uuids (currently hard coded for 5 devices)
 - RDM Database
