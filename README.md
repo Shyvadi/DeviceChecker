@@ -3,6 +3,7 @@ Simple yet effective Device Checker for RDM (Written in python for Discord)
 
 WHAT IT DOES:
 - Posts updates for phone status every 5 seconds without spamming messages (edits a single one)
+- Posts Current Device Task
 - Private messages the initiator of Device Failure
 
 REQUIREMENTS:
