@@ -57,7 +57,6 @@ def errormsg(numberofdevices):
     return d_broke, d_error_message
 
 
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -74,9 +73,8 @@ async def on_message(message):
             BOT_MSG, initialmsg = initial_msg(Phone_uuids)
 
             fmsg = await client.send_message(message.channel, initialmsg)
+            d_broke, d_error_message = errormsg(Phone_uuids)
             while sock == 1:
-
-                d_broke, d_error_message = errormsg(Phone_uuids)
 
                 time.sleep(5)
 
@@ -114,7 +112,6 @@ async def on_message(message):
                                 BOT_MSG[i][2] = ': Device is broken FIX'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
                                     await client.send_message(message.author, "Device "+ str(BOT_MSG[i][1]+1)+ " is Broken!")
-                                    await client.send_message(message.author,"If you see this everything works")
                                     d_error_message[i] = "1"
                                 d_broke[i] = "1"
 
