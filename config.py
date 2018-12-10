@@ -15,4 +15,4 @@ host=''
 port=''
 database=''
 
-query = "SELECT uuid, last_seen,instance_name FROM DATABASENAME.device"
+query = "SELECT uuid, last_seen,instance_name FROM DATABASENAME.device" # ONLY CHANGE "DATABASENAME" HERE
