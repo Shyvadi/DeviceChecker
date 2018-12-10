@@ -16,16 +16,43 @@ import discord
 TOKEN = ''  # Token for the Bot
 
 YourDiscordID = ''  # The ID of YOUR Discord Account (Allows only you to start the bot)
-                                      # Start the bot with !start
 
-Phone1_uuid = ""
-Phone2_uuid = ""
-Phone3_uuid = ""
-Phone4_uuid = ""
-Phone5_uuid = ""
-# I will add a different method of adding more phones later but for now this bot supports 5 - Ataku
+
+
+
+Phone_uuids = ["", ""]
+# Add phone uuids like: ["phoneuuid1", "phoneuuid2"] etc etc
+
+editedmsg = "" # IGNORE THIS DO NOT CHANGE IT
+devicecount = 0  # IGNORE THIS DO NOT CHANGE IT
+for i in Phone_uuids:
+    devicecount = devicecount + 1
+
+# Add as many phone ids as you want :) - Ataku
 
 client = discord.Client()
+
+
+def initial_msg(deviceids):
+    initialmsg = ""
+    fmsg = []
+    deviceids_length = len(deviceids)
+    for i in range(deviceids_length):
+        fmsg.append(["\nDevice ", i, " About to check device..."])
+        initialmsg += (fmsg[i][0] + str(fmsg[i][1] + 1) + fmsg[i][2])
+
+    return fmsg, initialmsg
+
+
+def errormsg(numberofdevices):
+    d_broke = []
+    d_error_message = []
+    numberofdevices_length = len(numberofdevices)
+    for i in range(numberofdevices_length):
+        d_broke.append(False)
+        d_error_message.append(True)
+
+    return d_broke, d_error_message
 
 
 @client.event
@@ -40,43 +67,23 @@ async def on_message(message):
         if message.author.id == YourDiscordID:
             sock = 1
             print("it works!")
-            d1 = "About to check device..."
-            d2 = "About to check device..."
-            d3 = "About to check device..."
-            d4 = "About to check device..."
-            d5 = "About to check device..."
 
-            d1_broke = False
-            d1_error_message = True
-            d2_broke = False
-            d2_error_message = True
-            d3_broke = False
-            d3_error_message = True
-            d4_broke = False
-            d4_error_message = True
-            d5_broke = False
-            d5_error_message = True
+            BOT_MSG, initialmsg = initial_msg(Phone_uuids)
 
-            fmsg = await client.send_message(message.channel, 'Device 1: '+d1+'\n'+'Device 2: '+d2+'\n'+'Device 3: '
-                                             + d3 + '\n'+'Device 4: '+d4+'\n'+'Device 5: '+d5)
+            fmsg = await client.send_message(message.channel, initialmsg)
             while sock == 1:
+
+                d_broke, d_error_message = errormsg(Phone_uuids)
 
                 time.sleep(5)
 
-                # PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE
-                # PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE
-                # PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE
-                # PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE PART 2 HERE
-
-                # ONLY EDIT user, password, host, port, database AND THE database name IN THE query BELOW
                 cnx = mysql.connector.connect(user='', password='',
-                                              host='', port='',
+                                              host='', port="",
                                               database='')
 
                 cursor = cnx.cursor()
 
-                # Replace sentence with database name below EDIT NOTHING ELSE
-                query = "SELECT uuid, last_seen,instance_name FROM [ENTER DATABASE NAME HERE, REMOVE BRACKETS].device"
+                query = "SELECT uuid, last_seen,instance_name FROM DATABASENAME.device"
 
                 cursor.execute(query)
 
@@ -88,128 +95,39 @@ async def on_message(message):
                 # DO NOT TOUCH BELOW
                 # Literally so delicate you could break everything :(
                 for (uuid, last_seen, instance_name) in cursor:
+                    editedmsg = ""
                     print("{}, {} ".format(
                         uuid, last_seen, instance_name))
                     times = time.time()
                     int(times)
                     print("THE CURRENT TIME IS: " + str(times) + "\n\n\n\n")
                     int(times)
+                    Phone_uuids_length = len(Phone_uuids)
+                    for i in range(Phone_uuids_length):
 
-                    if uuid == Phone1_uuid:
-                        i1 = instance_name
+                        if uuid == Phone_uuids[i]:
+                            i1 = instance_name
 
-                        if last_seen > (times - 400):
-                            d1 = 'Device is broken FIX'
-                            if d1_broke is True and d1_error_message is False:
-                                await client.send_message(message.author, "Device 1 is Broken!")
-                                d1_error_message = True
-                            d1_broke = True
+                            if last_seen > (times - 2000):
+                                BOT_MSG[i][2] = ': Device is broken FIX'
+                                if d_broke[i] is True and d_error_message[i] is False:
+                                    await client.send_message(message.author, ("Device ", BOT_MSG[i][1], "is Broken!"))
+                                    d_error_message[i] = True
+                                d_broke[i] = True
 
-                            if last_seen > (times - 100):
-                                d1 = "Device is currently experiencing a error"
-                                d1_broke = False
+                                if last_seen > (times - 100):
+                                    BOT_MSG[i][2] = ": Device is currently experiencing a error"
+                                    d_broke[i] = False
 
-                                if last_seen >= (times - 50):
-                                    d1 = "Device is currently experiencing a delay"
-                                    d1_broke = False
+                                    if last_seen >= (times - 50):
+                                        BOT_MSG[i][2] = ": Device is currently experiencing a delay"
+                                        d_broke[i] = False
 
-                                    if last_seen > (times - 30):
-                                        d1 = "Device is Online"
-                                        d1_broke = False
-                                        d1_error_message = False
-                                        print("Device 1 is up")
-
-                    elif uuid == Phone2_uuid:
-                        i2 = instance_name
-                        if last_seen > (times - 400):
-                            d2 = 'Device is broken FIX'
-                            if d2_broke is True and d2_error_message is False:
-                                await client.send_message(message.author, "Device 2 is Broken!")
-                                d2_error_message = True
-                            d2_broke = True
-
-                            if last_seen > (times - 100):
-                                d2 = "Device is currently experiencing a error"
-                                d2_broke = False
-
-                                if last_seen >= (times - 50):
-                                    d2 = "Device is currently experiencing a delay"
-                                    d2_broke = False
-
-                                    if last_seen > (times - 30):
-                                        d2 = "Device is Online"
-                                        d2_broke = False
-                                        d2_error_message = False
-                                        print("Device 2 is up")
-
-                    elif uuid == Phone3_uuid:
-                        i3 = instance_name
-                        if last_seen > (times - 400):
-                            d3 = 'Device is broken FIX'
-                            if d3_broke is True and d3_error_message is False:
-                                await client.send_message(message.author, "Device 3 is Broken!")
-                                d3_error_message = True
-                            d3_broke = True
-
-                            if last_seen > (times - 100):
-                                d3 = "Device is currently experiencing a error"
-                                d3_broke = False
-
-                                if last_seen >= (times - 50):
-                                    d3 = "Device is currently experiencing a delay"
-                                    d3_broke = False
-
-                                    if last_seen > (times - 30):
-                                        d3 = "Device is Online"
-                                        d3_broke = False
-                                        d3_error_message = False
-                                        print("Device 3 is up")
-
-                    elif uuid == Phone4_uuid:
-                        i4 = instance_name
-                        if last_seen > (times - 400):
-                            d4 = 'Device is broken FIX'
-                            if d4_broke is True and d4_error_message is False:
-                                await client.send_message(message.author, "Device 4 is Broken!")
-                                d4_error_message = True
-                            d4_broke = True
-
-                            if last_seen > (times - 100):
-                                d4 = "Device is currently experiencing a error"
-                                d4_broke = False
-
-                                if last_seen >= (times - 50):
-                                    d4 = "Device is currently experiencing a delay"
-                                    d4_broke = False
-
-                                    if last_seen > (times - 30):
-                                        d4 = "Device is Online"
-                                        d4_broke = False
-                                        d4_error_message = False
-                                        print("Device 4 is up")
-
-                    elif uuid == Phone5_uuid:
-                        i5 = instance_name
-                        if last_seen > (times - 400):
-                            d5 = 'Device is broken FIX'
-                            if d5_broke is True and d5_error_message is False:
-                                await client.send_message(message.author, "Device 5 is Broken!")
-                                d5_error_message = True
-                            d5_broke = True
-
-                            if last_seen > (times - 100):
-                                d5 = "Device is currently experiencing a error"
-                                d5_broke = False
-
-                                if last_seen >= (times - 50):
-                                    d5 = "Device is currently experiencing a delay"
-                                    d5_broke = False
-
-                                    if last_seen > (times - 30):
-                                        d5 = "Device is Online"
-                                        d5_broke = False
-                                        d5_error_message = False
-                                        print("Device 5 is up")
+                                        if last_seen > (times - 30):
+                                            BOT_MSG[i][2] = ": Device is Online"
+                                            d_broke[i] = False
+                                            d_error_message[i] = False
+                                            print("Device is up")
 
                 cursor.close()
                 cnx.close()
@@ -217,15 +135,12 @@ async def on_message(message):
                 datetime.datetime.now()
 
                 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
+                for i in range(Phone_uuids_length):
+                    editedmsg += (BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][
+                        2] + '\n\n' + 'Current Work: ' + i1 + '\n' + sep + '\n\n')
 
-                await client.edit_message(fmsg, new_content='Device 1: '+d1+'\n\n'+'**Current Work: '+i1 +
-                                                            '\n'+sep+'\n\n''**Device 2: '
-                                                            +d2+'\n\n'+'**Current Work: '
-                                                            +i2+'\n'+sep+'\n\n'+'**Device 3: '+d3+'\n\n' +
-                                                            '**Current Work: '+i3+'\n'+sep+'\n\n' +
-                                                            '**Device 4: '+d4+'\n\n'+'**Current Work: '+i4 +
-                                                            '\n'+sep+'\n\n'+'**Device 5: '+d5+'\n\n'+'**Current Work: '
-                                                            +i5+'\n\n**Last Update: '+str(datetime.datetime.now()))
+                await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                    datetime.datetime.now()) + "**")
                 print("was the messaged edited?")
 
 
@@ -235,5 +150,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
 
 client.run(TOKEN)
