@@ -72,6 +72,11 @@ async def on_message(message):
 
             fmsg = await client.send_message(message.channel, initialmsg)
             while sock == 1:
+                # PART 2 HERE
+                # PART 2 HERE
+                # PART 2 HERE
+                # PART 2 HERE
+                # PART 2 HERE
 
                 d_broke, d_error_message = errormsg(Phone_uuids)
 
