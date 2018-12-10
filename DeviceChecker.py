@@ -1,32 +1,34 @@
 import time
 import mysql.connector
 import datetime
+import config
+# MADE BY ATAKU
 
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
+#DO NOT TOUCH THIS FILE ANYMORE
 
 # Work with Python 3.6
 import discord
+i1 = [] # dont mind this :3
+TOKEN = config.TOKEN
 
-# Welcome to Ataku's Device Checker Bot for RDM. Follow the instructions in README to setup completely.
-# Welcome to Ataku's Device Checker Bot for RDM. Follow the instructions in README to setup completely.
-# Welcome to Ataku's Device Checker Bot for RDM. Follow the instructions in README to setup completely.
-# Welcome to Ataku's Device Checker Bot for RDM. Follow the instructions in README to setup completely.
-# Welcome to Ataku's Device Checker Bot for RDM. Follow the instructions in README to setup completely.
+YourDiscordID = config.YourDiscordID
 
-
-TOKEN = ''  # Token for the Bot
-
-YourDiscordID = ''  # The ID of YOUR Discord Account (Allows only you to start the bot)
-
-
-
-
-Phone_uuids = ["", ""]
+editedmsg = ""
+Phone_uuids = config.Phone_uuids
 # Add phone uuids like: ["phoneuuid1", "phoneuuid2"] etc etc
-
-editedmsg = "" # IGNORE THIS DO NOT CHANGE IT
-devicecount = 0  # IGNORE THIS DO NOT CHANGE IT
+devicecount = 0
 for i in Phone_uuids:
-    devicecount = devicecount + 1
+    devicecount = devicecount+1
+    i1.append("")
 
 # Add as many phone ids as you want :) - Ataku
 
@@ -39,7 +41,7 @@ def initial_msg(deviceids):
     deviceids_length = len(deviceids)
     for i in range(deviceids_length):
         fmsg.append(["\nDevice ", i, " About to check device..."])
-        initialmsg += (fmsg[i][0] + str(fmsg[i][1] + 1) + fmsg[i][2])
+        initialmsg += (fmsg[i][0]+str(fmsg[i][1]+1)+fmsg[i][2])
 
     return fmsg, initialmsg
 
@@ -49,10 +51,11 @@ def errormsg(numberofdevices):
     d_error_message = []
     numberofdevices_length = len(numberofdevices)
     for i in range(numberofdevices_length):
-        d_broke.append(False)
-        d_error_message.append(True)
+            d_broke.append("0")
+            d_error_message.append("1")
 
     return d_broke, d_error_message
+
 
 
 @client.event
@@ -72,27 +75,21 @@ async def on_message(message):
 
             fmsg = await client.send_message(message.channel, initialmsg)
             while sock == 1:
-                # PART 2 HERE
-                # PART 2 HERE
-                # PART 2 HERE
-                # PART 2 HERE
-                # PART 2 HERE
 
                 d_broke, d_error_message = errormsg(Phone_uuids)
 
                 time.sleep(5)
 
-                cnx = mysql.connector.connect(user='', password='',
-                                              host='', port="",
-                                              database='')
+                cnx = mysql.connector.connect(user=config.user, password=config.password,
+                                              host=config.host, port=config.port,
+                                              database=config.database)
 
                 cursor = cnx.cursor()
 
-                query = "SELECT uuid, last_seen,instance_name FROM DATABASENAME.device"
-
-                cursor.execute(query)
+                cursor.execute(config.query)
 
                 sep = '-----------------------------'
+
 
                 # DO NOT TOUCH BELOW
                 # DO NOT TOUCH BELOW
@@ -111,27 +108,28 @@ async def on_message(message):
                     for i in range(Phone_uuids_length):
 
                         if uuid == Phone_uuids[i]:
-                            i1 = instance_name
+                            i1[i] = instance_name
 
                             if last_seen > (times - 2000):
                                 BOT_MSG[i][2] = ': Device is broken FIX'
-                                if d_broke[i] is True and d_error_message[i] is False:
-                                    await client.send_message(message.author, ("Device ", BOT_MSG[i][1], "is Broken!"))
-                                    d_error_message[i] = True
-                                d_broke[i] = True
+                                if d_broke[i] == "1" and d_error_message[i] == "0":
+                                    await client.send_message(message.author, "Device "+ str(BOT_MSG[i][1]+1)+ " is Broken!")
+                                    await client.send_message(message.author,"If you see this everything works")
+                                    d_error_message[i] = "1"
+                                d_broke[i] = "1"
 
                                 if last_seen > (times - 100):
                                     BOT_MSG[i][2] = ": Device is currently experiencing a error"
-                                    d_broke[i] = False
+                                    d_broke[i] = "0"
 
                                     if last_seen >= (times - 50):
                                         BOT_MSG[i][2] = ": Device is currently experiencing a delay"
-                                        d_broke[i] = False
+                                        d_broke[i] = "0"
 
                                         if last_seen > (times - 30):
                                             BOT_MSG[i][2] = ": Device is Online"
-                                            d_broke[i] = False
-                                            d_error_message[i] = False
+                                            d_broke[i] = "0"
+                                            d_error_message[i] = "0"
                                             print("Device is up")
 
                 cursor.close()
@@ -141,11 +139,9 @@ async def on_message(message):
 
                 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
                 for i in range(Phone_uuids_length):
-                    editedmsg += (BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][
-                        2] + '\n\n' + 'Current Work: ' + i1 + '\n' + sep + '\n\n')
+                    editedmsg += (BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2]+'\n\n'+'Current Work: '+i1[i] + '\n'+sep+'\n\n')
 
-                await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                    datetime.datetime.now()) + "**")
+                await client.edit_message(fmsg, new_content=editedmsg+'\n\n**Last Update: '+str(datetime.datetime.now())+"**")
                 print("was the messaged edited?")
 
 
@@ -155,6 +151,5 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
 
 client.run(TOKEN)
