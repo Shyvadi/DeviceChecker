@@ -17,16 +17,15 @@ REQUIREMENTS:
 STEPS TO CONFIGURE BOT:
 
 - 1: Make sure you have python 3.6 installed (Python 3.7 Will NOT work)
-- 2: open DeviceChecker.py with your text editor application
+- 2: open config.py with your text editor application
 - 3: Change the TOKEN to the token listed from your BOT
 - 4: Change YourDiscordID to YOUR Discord ID (see how to get it in requirements)
 - 5: Change the Phone_uuids to iPhone uuids (AS MANY AS YOU WANT)
-- 6: Scroll down until you see PART 2 HERE
-- 7: Change the user, password, host, port and database to your RDM details. (database being the name of the database)
-- 8: Change the query below "cursor = cnx.cursor()" to your database name (Change DATABASENAME to your db name)
-- 9: Save as DeviceChecker.py
-- 10: If you are on Windows, run DeviceChecker.bat, otherwise start with "python DeviceChecker.py" while in the directory
-- 11: REMEMBER TO HAVE THE BOT ON A SERVER FIRST
+- 6: Change the user, password, host, port and database to your RDM details. (database being the name of the database)
+- 7: Change the query below "cursor = cnx.cursor()" to your database name (Change DATABASENAME to your db name)
+- 8: Save as config.py
+- 9: If you are on Windows, run DeviceChecker.bat, otherwise start with "python DeviceChecker.py" while in the directory
+- 10: REMEMBER TO HAVE THE BOT ON A SERVER FIRST
 
 STEPS TO START BOT:
 - 1: Once you have the py file running, simply type !start in the channel you would like the bot to post the updates
