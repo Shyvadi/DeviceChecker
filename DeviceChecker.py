@@ -35,6 +35,7 @@ for i in Phone_uuids:
 client = discord.Client()
 
 
+
 def initial_msg(deviceids):
     initialmsg = ""
     fmsg = []
@@ -57,6 +58,7 @@ def errormsg(numberofdevices):
     return d_broke, d_error_message
 
 
+
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -76,6 +78,7 @@ async def on_message(message):
             d_broke, d_error_message = errormsg(Phone_uuids)
             while sock == 1:
 
+
                 time.sleep(5)
 
                 cnx = mysql.connector.connect(user=config.user, password=config.password,
@@ -84,10 +87,9 @@ async def on_message(message):
 
                 cursor = cnx.cursor()
 
-                cursor.execute(config.query)
+                cursor.execute("SELECT uuid, last_seen,instance_name FROM "+config.database+".device")
 
                 sep = '-----------------------------'
-
 
                 # DO NOT TOUCH BELOW
                 # DO NOT TOUCH BELOW
@@ -108,23 +110,24 @@ async def on_message(message):
                         if uuid == Phone_uuids[i]:
                             i1[i] = instance_name
 
-                            if last_seen > (times - 2000):
-                                BOT_MSG[i][2] = ': Device is broken FIX'
+                            if last_seen > (times - 6000):
+                                BOT_MSG[i][2] = ': XXX'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
-                                    await client.send_message(message.author, "Device "+ str(BOT_MSG[i][1]+1)+ " is Broken!")
+                                    await client.send_message(message.author, "Device " + str(
+                                        BOT_MSG[i][1] + 1) + " is Having Trouble!!")
                                     d_error_message[i] = "1"
                                 d_broke[i] = "1"
 
-                                if last_seen > (times - 100):
-                                    BOT_MSG[i][2] = ": Device is currently experiencing a error"
+                                if last_seen > (times - 200):
+                                    BOT_MSG[i][2] = ": ✓"
                                     d_broke[i] = "0"
 
                                     if last_seen >= (times - 50):
-                                        BOT_MSG[i][2] = ": Device is currently experiencing a delay"
+                                        BOT_MSG[i][2] = ": ✓✓"
                                         d_broke[i] = "0"
 
                                         if last_seen > (times - 30):
-                                            BOT_MSG[i][2] = ": Device is Online"
+                                            BOT_MSG[i][2] = ": ✓✓✓"
                                             d_broke[i] = "0"
                                             d_error_message[i] = "0"
                                             print("Device is up")
@@ -136,14 +139,16 @@ async def on_message(message):
 
                 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
                 for i in range(Phone_uuids_length):
-                    editedmsg += (BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2]+'\n\n'+'Current Work: '+i1[i] + '\n'+sep+'\n\n')
+                    editedmsg += (
+                    BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2] + '(' + i1[i] + ')' + '\n' + sep)
 
-                await client.edit_message(fmsg, new_content=editedmsg+'\n\n**Last Update: '+str(datetime.datetime.now())+"**")
+                await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                    datetime.datetime.now()) + "**\nXXX Means dead")
                 print("was the messaged edited?")
-
 
 @client.event
 async def on_ready():
+
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
