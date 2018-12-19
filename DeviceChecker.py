@@ -58,7 +58,6 @@ def errormsg(numberofdevices):
     return d_broke, d_error_message
 
 
-
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -118,7 +117,7 @@ async def on_message(message):
                                     d_error_message[i] = "1"
                                 d_broke[i] = "1"
 
-                                if last_seen > (times - 200):
+                                if last_seen > (times - 400):
                                     BOT_MSG[i][2] = ": ✓"
                                     d_broke[i] = "0"
 
@@ -142,8 +141,15 @@ async def on_message(message):
                     editedmsg += (
                     BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2] + '(' + i1[i] + ')' + '\n' + sep)
 
-                await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                    datetime.datetime.now()) + "**\nXXX Means dead")
+                try:
+                    await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                        datetime.datetime.now()) + "**\nXXX Means dead")
+                except:
+                    time.sleep(5)
+                    await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                        datetime.datetime.now()) + "**\nXXX Means dead")
+                    print("if you see this, there was an error twice. Which isn't good.")
+
                 print("was the messaged edited?")
 
 @client.event
