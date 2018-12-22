@@ -79,15 +79,30 @@ async def on_message(message):
 
 
                 time.sleep(5)
+                try:
 
-                cnx = mysql.connector.connect(user=config.user, password=config.password,
+                    cnx = mysql.connector.connect(user=config.user, password=config.password,
                                               host=config.host, port=config.port,
                                               database=config.database)
 
-                cursor = cnx.cursor()
+                    cursor = cnx.cursor()
 
-                cursor.execute("SELECT uuid, last_seen,instance_name FROM "+config.database+".device")
+                    cursor.execute("SELECT uuid, last_seen,instance_name FROM "+config.database+".device")
+                except:
+                    time.sleep(10)
+                    print("MYSQL CONNECTION ISSUE")
+                    print("MYSQL CONNECTION ISSUE")
+                    print("MYSQL CONNECTION ISSUE")
+                    print("MYSQL CONNECTION ISSUE")
+                    print("MYSQL CONNECTION ISSUE")
+                    cnx = mysql.connector.connect(user=config.user, password=config.password,
+                                                  host=config.host, port=config.port,
+                                                  database=config.database)
 
+                    cursor = cnx.cursor()
+
+                    cursor.execute("SELECT uuid, last_seen,instance_name FROM " + config.database + ".device")
+                    print("MYSQL CONNECTION FIXED")
                 sep = '-----------------------------'
 
                 # DO NOT TOUCH BELOW
@@ -140,17 +155,31 @@ async def on_message(message):
                 for i in range(Phone_uuids_length):
                     editedmsg += (
                     BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2] + '(' + i1[i] + ')' + '\n' + sep)
-
                 try:
                     await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
                         datetime.datetime.now()) + "**\nXXX Means dead")
                 except:
                     time.sleep(5)
-                    await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                        datetime.datetime.now()) + "**\nXXX Means dead")
-                    print("if you see this, there was an error twice. Which isn't good.")
 
-                print("was the messaged edited?")
+                    try:
+                        await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                            datetime.datetime.now()) + "**\nXXX Means dead")
+                    except:
+                        time.sleep(20)
+                        try:
+                            await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                                datetime.datetime.now()) + "**\nXXX Means dead")
+                        except:
+                            time.sleep(60)
+                            print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
+                            print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
+                            print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
+                            print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
+                            print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
+                            await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
+                                datetime.datetime.now()) + "**\nXXX Means dead")
+
+
 
 @client.event
 async def on_ready():
