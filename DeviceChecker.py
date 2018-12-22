@@ -125,7 +125,7 @@ async def on_message(message):
                             i1[i] = instance_name
 
                             if last_seen > (times - 12000):
-                                BOT_MSG[i][2] = ': XXX'
+                                BOT_MSG[i][2] = ': :no_mobile_phones:'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
                                     await client.send_message(message.author, "Device " + str(
                                         BOT_MSG[i][1] + 1) + " is Having Trouble!!")
@@ -133,18 +133,14 @@ async def on_message(message):
                                 d_broke[i] = "1"
 
                                 if last_seen > (times - 400):
-                                    BOT_MSG[i][2] = ": ✓"
+                                    BOT_MSG[i][2] = ": :warning:"
                                     d_broke[i] = "0"
 
-                                    if last_seen >= (times - 50):
-                                        BOT_MSG[i][2] = ": ✓✓"
+                                    if last_seen > (times - 30):
+                                        BOT_MSG[i][2] = ": :white_check_mark:"
                                         d_broke[i] = "0"
-
-                                        if last_seen > (times - 30):
-                                            BOT_MSG[i][2] = ": ✓✓✓"
-                                            d_broke[i] = "0"
-                                            d_error_message[i] = "0"
-                                            print("Device is up")
+                                        d_error_message[i] = "0"
+                                        print("Device is up")
 
                 cursor.close()
                 cnx.close()
@@ -157,18 +153,18 @@ async def on_message(message):
                     BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2] + '(' + i1[i] + ')' + '\n' + sep)
                 try:
                     await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                        datetime.datetime.now()) + "**\nXXX Means dead")
+                        datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
                 except:
                     time.sleep(5)
 
                     try:
                         await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                            datetime.datetime.now()) + "**\nXXX Means dead")
+                            datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
                     except:
                         time.sleep(20)
                         try:
                             await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                                datetime.datetime.now()) + "**\nXXX Means dead")
+                                datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
                         except:
                             time.sleep(60)
                             print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
@@ -177,7 +173,7 @@ async def on_message(message):
                             print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
                             print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
                             await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
-                                datetime.datetime.now()) + "**\nXXX Means dead")
+                                datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
 
 
 
