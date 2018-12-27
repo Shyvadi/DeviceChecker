@@ -114,7 +114,7 @@ async def on_message(message):
                         uuid, last_seen, instance_name))
                     times = time.time()
                     int(times)
-                    print("THE CURRENT TIME IS: " + str(times) + "\n\n\n\n")
+                    print("THE CURRENT TIME IS: " + str(times))
                     int(times)
                     Phone_uuids_length = len(Phone_uuids)
                     for i in range(Phone_uuids_length):
@@ -122,7 +122,7 @@ async def on_message(message):
                         if uuid == Phone_uuids[i]:
                             i1[i] = instance_name
 
-                            if last_seen > (times - 12000):
+                            if last_seen > (times - 12000) or last_seen > (times - 1500000):
                                 BOT_MSG[i][2] = ': :no_mobile_phones:'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
                                     await client.send_message(message.author, str(
@@ -138,7 +138,7 @@ async def on_message(message):
                                         BOT_MSG[i][2] = ": :white_check_mark:"
                                         d_broke[i] = "0"
                                         d_error_message[i] = "0"
-                                        print("Device is up")
+                                        print("Device is up" + "\n\n\n\n")
 
                 cursor.close()
                 cnx.close()
