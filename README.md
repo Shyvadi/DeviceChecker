@@ -7,7 +7,8 @@ WHAT IT DOES:
 - Private messages the initiator of Device Failure
 
 REQUIREMENTS:
-- Discord.py (install with "python3 -m pip install -U discord.py")
+- Discord.py (install with "python3 -m pip install -U discord.py") 
+If you get an aioHttp error try downgrading discord.py "pip3.6 install 'discord.py<1.0
 - mysql connector (https://dev.mysql.com/downloads/connector/python/)
 - Discord Bot with token ready and has read & write permissions
 - iPhone uuids (the ones in the database)
