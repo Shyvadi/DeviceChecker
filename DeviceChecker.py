@@ -122,7 +122,7 @@ async def on_message(message):
                         if uuid == Phone_uuids[i]:
                             i1[i] = instance_name
 
-                            if last_seen > (times - 12000) or last_seen > (times - 1500000):
+                            if last_seen > (times - 12000) or last_seen > (times - times):
                                 BOT_MSG[i][2] = ': :no_mobile_phones:'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
                                     await client.send_message(message.author, str(
