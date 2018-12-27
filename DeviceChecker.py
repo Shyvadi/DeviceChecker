@@ -16,6 +16,7 @@ import config
 #DO NOT TOUCH THIS FILE ANYMORE
 
 # Work with Python 3.6
+# If you get an aioHttp error try downgrading discord.py "pip3.6 install 'discord.py<1.0"
 import discord
 i1 = [] # dont mind this :3
 TOKEN = config.TOKEN
@@ -35,14 +36,13 @@ for i in Phone_uuids:
 client = discord.Client()
 
 
-
 def initial_msg(deviceids):
     initialmsg = ""
     fmsg = []
     deviceids_length = len(deviceids)
     for i in range(deviceids_length):
-        fmsg.append(["\nDevice ", i, " About to check device..."])
-        initialmsg += (fmsg[i][0]+str(fmsg[i][1]+1)+fmsg[i][2])
+        fmsg.append(["\n", deviceids[i], " About to check device..."])
+        initialmsg += (fmsg[i][0] + fmsg[i][1] + fmsg[i][2])
 
     return fmsg, initialmsg
 
@@ -69,7 +69,9 @@ async def on_message(message):
 
         if message.author.id == YourDiscordID:
             sock = 1
-            print("it works!")
+            print("Bot can see your message!")
+            print("Bot can see your message!")
+            print("Bot can see your message!")
 
             BOT_MSG, initialmsg = initial_msg(Phone_uuids)
 
@@ -103,11 +105,7 @@ async def on_message(message):
 
                     cursor.execute("SELECT uuid, last_seen,instance_name FROM " + config.database + ".device")
                     print("MYSQL CONNECTION FIXED")
-                sep = '-----------------------------'
 
-                # DO NOT TOUCH BELOW
-                # DO NOT TOUCH BELOW
-                # DO NOT TOUCH BELOW
                 # DO NOT TOUCH BELOW
                 # Literally so delicate you could break everything :(
                 for (uuid, last_seen, instance_name) in cursor:
@@ -127,8 +125,8 @@ async def on_message(message):
                             if last_seen > (times - 12000):
                                 BOT_MSG[i][2] = ': :no_mobile_phones:'
                                 if d_broke[i] == "1" and d_error_message[i] == "0":
-                                    await client.send_message(message.author, "Device " + str(
-                                        BOT_MSG[i][1] + 1) + " is Having Trouble!!")
+                                    await client.send_message(message.author, str(
+                                        BOT_MSG[i][1]) + " is Having Trouble!!")
                                     d_error_message[i] = "1"
                                 d_broke[i] = "1"
 
@@ -150,7 +148,7 @@ async def on_message(message):
                 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
                 for i in range(Phone_uuids_length):
                     editedmsg += (
-                    BOT_MSG[i][0] + str(BOT_MSG[i][1] + 1) + BOT_MSG[i][2] + '(' + i1[i] + ')' + '\n' + sep)
+                    BOT_MSG[i][0] + str(BOT_MSG[i][1]) + BOT_MSG[i][2] + '(' + i1[i] + ')')
                 try:
                     await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
                         datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
@@ -174,7 +172,6 @@ async def on_message(message):
                             print("IF YOU SEE THIS THERE IS A CONNECTION ISSUE SOMEWHERE")
                             await client.edit_message(fmsg, new_content=editedmsg + '\n\n**Last Update: ' + str(
                                 datetime.datetime.now()) + "**\n:no_mobile_phones: Means dead")
-
 
 
 @client.event
