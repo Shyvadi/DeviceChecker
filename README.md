@@ -10,7 +10,7 @@ REQUIREMENTS:
 - Discord.py (install with "python3 -m pip install -U discord.py")
 - mysql connector (https://dev.mysql.com/downloads/connector/python/)
 - Discord Bot with token ready and has read & write permissions
-- iPhone uuids 
+- iPhone uuids (the ones in the database)
 - RDM Database
 - Your Discord ID (right click on your account name after typing something, click copy ID)
 
